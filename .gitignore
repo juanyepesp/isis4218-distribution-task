@@ -1,0 +1,9 @@
+# Specify filepatterns you want git to ignore.
+
+**.DS_Store
+.formatter.exs
+**config
+**mix.lock
+**rel
+**test
+**root**
