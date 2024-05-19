@@ -1,4 +1,6 @@
 defmodule Chat do
+  @node_name "node_2"
+
   def insert({pos_id, str}) do
     IO.puts("pos_id: #{pos_id}, str: #{str}")
     Agent.update(:treedoc, &Treedoc.insert(&1, {pos_id, str}))
@@ -47,7 +49,8 @@ defmodule Chat do
       "1" ->
         msg = IO.gets("Enter message: ") |> String.trim()
         element = {:os.system_time(), msg}
-        Agent.update(:treedoc, &Treedoc.insert(&1, element))
+        # Agent.update(:treedoc, &Treedoc.insert(&1, element))
+        insert(element)
 
         Enum.each(Node.list(), fn node ->
           send_message(node, element, :insert)
@@ -59,7 +62,8 @@ defmodule Chat do
           |> String.trim()
           |> String.to_integer()
 
-        Agent.update(:treedoc, &Treedoc.delete(&1, pos_id))
+        # Agent.update(:treedoc, &Treedoc.delete(&1, pos_id))
+        delete(pos_id)
 
         Enum.each(Node.list(), fn node ->
           send_message(node, pos_id, :delete)
